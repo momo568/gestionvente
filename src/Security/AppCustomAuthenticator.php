@@ -27,14 +27,13 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         $email = $request->request->get('email', '');
         $password = $request->request->get('password', '');
 
-        // Enregistre l'email dans la session (pour pré-remplir le champ en cas d’erreur)
+        // ✅ Mémoriser l'email pour le préremplir après une erreur
         $request->getSession()->set('last_username', $email);
 
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($password),
             [
-                // ✅ Protection contre les attaques CSRF
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
             ]
         );
@@ -42,13 +41,24 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): Response
     {
-        // ✅ Redirection après connexion réussie
-        return new RedirectResponse($this->urlGenerator->generate('app_commande_index'));
+        $user = $token->getUser();
+
+        // ✅ Redirection selon le rôle de l'utilisateur
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return new RedirectResponse($this->urlGenerator->generate('app_dashboard'));
+        }
+
+        if (in_array('ROLE_USER', $user->getRoles())) {
+            return new RedirectResponse($this->urlGenerator->generate('client_catalogue'));
+        }
+
+        // Par défaut (au cas où)
+        return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        // ✅ Retour à la page login avec un message d'erreur
+        // ✅ Retour à la page login avec message d'erreur
         $request->getSession()->getFlashBag()->add('error', 'Email ou mot de passe incorrect.');
         return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
     }

@@ -19,6 +19,13 @@ class Commande
     #[ORM\Column]
     private ?float $total = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $client = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $statut = 'en attente';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -32,7 +39,6 @@ class Commande
     public function setDateCommande(\DateTimeImmutable $dateCommande): static
     {
         $this->dateCommande = $dateCommande;
-
         return $this;
     }
 
@@ -44,7 +50,28 @@ class Commande
     public function setTotal(float $total): static
     {
         $this->total = $total;
+        return $this;
+    }
 
+    public function getClient(): ?User
+    {
+        return $this->client;
+    }
+
+    public function setClient(?User $client): static
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): static
+    {
+        $this->statut = $statut;
         return $this;
     }
 }

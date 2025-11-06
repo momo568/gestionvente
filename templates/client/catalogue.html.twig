@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2 class="mb-4">🛍️ Catalogue des Produits</h2>
+
+<div class="row">
+    {% for produit in produits %}
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ produit.nom }}</h5>
+                    <p class="card-text">{{ produit.prix }} DT</p>
+                    <a href="{{ path('client_ajouter_panier', {id: produit.id}) }}" class="btn btn-primary">
+                        🛒 Ajouter au panier
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>Aucun produit disponible.</p>
+    {% endfor %}
+</div>
+{% endblock %}

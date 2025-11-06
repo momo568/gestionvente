@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow border-0">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">👤 Mon Profil</h4>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Email :</strong> {{ user.email }}</p>
+                    <p><strong>Rôle :</strong> {{ user.roles|join(', ') }}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <a href="{{ path('app_logout') }}" class="btn btn-danger">
+                        🚪 Se déconnecter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

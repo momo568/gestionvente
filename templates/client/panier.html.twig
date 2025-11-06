@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>🛒 Mon Panier</h2>
+
+{% if panier is empty %}
+    <div class="alert alert-info">Votre panier est actuellement vide.</div>
+    <a href="{{ path('client_catalogue') }}" class="btn btn-primary">← Retour au catalogue</a>
+{% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set total = 0 %}
+            {% for id, produit in panier %}
+                {% set total = total + (produit.prix * produit.quantite) %}
+                <tr>
+                    <td>{{ produit.nom }}</td>
+                    <td>{{ produit.prix }} DT</td>
+                    <td>{{ produit.quantite }}</td>
+                    <td>{{ produit.prix * produit.quantite }} DT</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="text-end">Total : {{ total }} DT</h4>
+
+    <a href="{{ path('client_vider_panier') }}" class="btn btn-danger">🗑️ Vider le panier</a>
+{% endif %}
+{% endblock %}
