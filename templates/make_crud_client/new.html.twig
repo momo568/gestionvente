@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+
+{% block body %}
+    <h1>Create new Produit</h1>
+
+    {{ include('make_crud_client/_form.html.twig') }}
+
+    <a href="{{ path('app_make_crud_client_index') }}">back to list</a>
+{% endblock %}
