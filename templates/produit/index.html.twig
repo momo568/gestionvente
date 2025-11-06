@@ -20,6 +20,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>#</th>
+                            <th>Image</th>
                             <th>Nom</th>
                             <th>Prix</th>
                             <th>Description</th>
@@ -31,10 +32,21 @@
                         {% for produit in produits %}
                             <tr>
                                 <td>{{ produit.id }}</td>
+
+                                <!-- ✅ Affichage de l’image -->
+                                <td>
+                                    {% if produit.image %}
+                                        <img src="{{ asset('uploads/' ~ produit.image) }}" alt="{{ produit.nom }}" width="70" height="70" class="rounded shadow-sm">
+                                    {% else %}
+                                        <span class="text-muted">Aucune image</span>
+                                    {% endif %}
+                                </td>
+
                                 <td>{{ produit.nom }}</td>
                                 <td>{{ produit.prix }} DT</td>
                                 <td>{{ produit.description }}</td>
                                 <td>{{ produit.stock }}</td>
+
                                 <td class="text-center">
                                     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-sm btn-warning">✏️ Modifier</a>
                                     <form method="post" action="{{ path('app_produit_delete', {'id': produit.id}) }}" style="display:inline-block" onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ?');">
