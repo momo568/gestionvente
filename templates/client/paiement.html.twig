@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}💳 Paiement de la commande{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="mb-3 text-primary">💳 Paiement de la commande #{{ commande.id }}</h2>
+
+    <p><strong>Total initial :</strong> {{ commande.total }} DT</p>
+
+    <form method="post">
+        <div class="input-group mb-3">
+            <input type="text" name="code_promo" class="form-control" placeholder="Entrez un code promo (facultatif)" value="{{ app.request.get('code_promo') }}">
+            <button type="submit" name="action" value="apply_code" class="btn btn-outline-primary">✅ Appliquer le code</button>
+        </div>
+
+        <button type="submit" name="action" value="pay" class="btn btn-success btn-lg w-100">💰 Confirmer le paiement</button>
+    </form>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-3">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger mt-3">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endblock %}

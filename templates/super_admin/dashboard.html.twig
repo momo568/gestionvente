@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord du Super Admin{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">👑 Tableau de bord du Super Admin</h1>
+
+    <div class="row g-4">
+        <!-- Bloc Catégories -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3" style="border-top: 5px solid #007bff;">
+                <div class="card-body">
+                    <h4>📁 Catégories</h4>
+                    <p class="text-muted">Gérez vos catégories de produits</p>
+                    <a href="{{ path('super_admin_categories') }}" class="btn btn-primary btn-sm">
+                        Gérer les catégories
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloc Promotions -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3" style="border-top: 5px solid #ff9800;">
+                <div class="card-body">
+                    <h4>🎁 Promotions</h4>
+                    <p class="text-muted">Créez et gérez vos offres spéciales</p>
+                    <a href="{{ path('super_admin_promotions') }}" class="btn btn-warning btn-sm text-white">
+                        Gérer les promotions
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloc Paiements -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3" style="border-top: 5px solid #28a745;">
+                <div class="card-body">
+                    <h4>💰 Paiements</h4>
+                    <p class="text-muted">Suivez les commandes et transactions</p>
+                    <a href="{{ path('super_admin_paiements') }}" class="btn btn-success btn-sm">
+                        Voir les paiements
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloc Utilisateurs -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3" style="border-top: 5px solid #9c27b0;">
+                <div class="card-body">
+                    <h4>🔑 Utilisateurs</h4>
+                    <p class="text-muted">Gérez les rôles et permissions</p>
+                    <a href="{{ path('admin_user_index') }}" class="btn btn-secondary btn-sm">
+                        Gérer les utilisateurs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section statistiques -->
+    <div class="mt-5">
+        <h3 class="mb-3">📊 Statistiques globales</h3>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="p-3 bg-primary text-white rounded shadow-sm">
+                    <h4>{{ totalProduits|default(0) }}</h4>
+                    <p>Produits</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-success text-white rounded shadow-sm">
+                    <h4>{{ totalCommandes|default(0) }}</h4>
+                    <p>Commandes</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-warning text-white rounded shadow-sm">
+                    <h4>{{ totalPromotions|default(0) }}</h4>
+                    <p>Promotions actives</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-danger text-white rounded shadow-sm">
+                    <h4>{{ totalUtilisateurs|default(0) }}</h4>
+                    <p>Utilisateurs inscrits</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

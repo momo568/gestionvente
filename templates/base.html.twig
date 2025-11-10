@@ -20,6 +20,7 @@
             background-color: #1a1d20;
             color: #fff;
             padding: 20px;
+            overflow-y: auto;
         }
         .sidebar h4 {
             color: #00bfff;
@@ -55,6 +56,21 @@
             color: white;
             background-color: #ff4d4d;
         }
+        .roles {
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        .super-admin-section {
+            border-top: 1px solid #444;
+            margin-top: 15px;
+            padding-top: 10px;
+        }
+        .super-admin-section h6 {
+            color: #00ffaa;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -63,29 +79,42 @@
     <div class="sidebar">
         <h4>🛒 Gestion Ventes</h4>
 
-        {% if is_granted('ROLE_ADMIN') %}
+        {# 🔹 ADMIN & SUPER ADMIN SECTION #}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
             <a href="{{ path('app_dashboard') }}">🏠 Tableau de bord</a>
             <a href="{{ path('app_produit_index') }}">📦 Produits</a>
             <a href="{{ path('app_commande_index') }}">🧾 Commandes</a>
-            {# ✅ correction ici #}
             <a href="{{ path('app_make_crud_client_index') }}">👤 Clients</a>
 
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="super-admin-section">
+                    <h6>👑 Espace Super Admin</h6>
+                    <a href="{{ path('super_admin_dashboard') }}">📊 Tableau de bord complet</a>
+                    <a href="{{ path('super_admin_categories') }}">🗂️ Gérer les catégories</a>
+                    <a href="{{ path('super_admin_promotions') }}">🎁 Gérer les promotions</a>
+                    <a href="{{ path('super_admin_paiements') }}">💰 Paiements / Commandes</a>
+                    <a href="{{ path('super_admin_users') }}">🔑 Gérer les utilisateurs</a>
+                    <a href="{{ path('admin_user_index') }}">🛠️ Gestion des rôles</a>
+                </div>
+            {% endif %}
         {% elseif is_granted('ROLE_USER') %}
+            {# 🔹 CLIENT SECTION #}
             <a href="{{ path('client_catalogue') }}">🛍️ Catalogue</a>
             <a href="{{ path('client_mes_commandes') }}">📜 Mes commandes</a>
             <a href="{{ path('client_profil') }}">👤 Mon profil</a>
             <a href="{{ path('client_panier') }}">🛒 Mon panier</a>
-            <a href="{{ path('client_commander') }}" class="btn btn-success mt-3">
+            <a href="{{ path('client_commander') }}" class="btn btn-success mt-3 w-100">
                 ✅ Passer la commande
             </a>
-
         {% endif %}
 
         <hr>
 
+        {# 🔹 INFOS UTILISATEUR #}
         {% if app.user %}
             <div class="mt-3">
                 <strong>{{ app.user.email }}</strong><br>
+                <p class="roles">🔑 Rôles actifs : {{ app.user.roles|join(', ') }}</p>
                 <a href="{{ path('app_logout') }}" class="logout d-block mt-2">🚪 Déconnexion</a>
             </div>
         {% else %}
@@ -97,7 +126,17 @@
         <span class="navbar-brand mb-0 h5">Tableau de bord</span>
     </nav>
 
+    {# ✅ Message flash Bootstrap #}
     <div class="content">
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} alert-dismissible fade show mt-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
     </div>
 

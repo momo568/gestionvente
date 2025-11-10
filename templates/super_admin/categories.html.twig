@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}🗂️ Catégories{% endblock %}
+
+{% block body %}
+<h2>🗂️ Gestion des catégories</h2>
+
+<form method="post" action="{{ path('super_admin_category_add') }}" class="mb-3">
+    <input type="text" name="name" placeholder="Nom de la catégorie" class="form-control mb-2" required>
+    <button class="btn btn-success">Ajouter une catégorie</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>ID</th><th>Nom</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+    {% for c in categories %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.name }}</td>
+            <td><a href="{{ path('super_admin_category_delete', {'id': c.id}) }}" class="btn btn-danger btn-sm">🗑️ Supprimer</a></td>
+        </tr>
+    {% else %}
+        <tr><td colspan="3">Aucune catégorie trouvée.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

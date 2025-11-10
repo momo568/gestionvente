@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}👥 Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+<h2 class="mb-4">👥 Gestion des utilisateurs</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Rôles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles|join(', ') }}</td>
+                <td>
+                    <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

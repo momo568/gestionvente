@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}🔑 Utilisateurs{% endblock %}
+
+{% block body %}
+<h2>🔑 Gestion des utilisateurs</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Rôles</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for u in users %}
+        <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.roles|join(', ') }}</td>
+        </tr>
+    {% else %}
+        <tr><td colspan="3">Aucun utilisateur trouvé.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

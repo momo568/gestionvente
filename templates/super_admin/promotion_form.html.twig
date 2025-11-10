@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block title %}➕ Nouvelle promotion{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-3 text-primary">➕ Ajouter une promotion</h2>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-body">
+
+            <form method="post">
+                <!-- Nom de la promotion -->
+                <div class="mb-3">
+                    <label for="nom" class="form-label fw-bold">Nom de la promotion</label>
+                    <input type="text" name="nom" id="nom" class="form-control" required placeholder="Ex : Soldes d'été">
+                </div>
+
+                <!-- Code promo -->
+                <div class="mb-3">
+                    <label for="code" class="form-label fw-bold">Code promo</label>
+                    <input type="text" name="code" id="code" class="form-control text-uppercase" required placeholder="Ex : ETE2025">
+                </div>
+
+                <!-- Pourcentage -->
+                <div class="mb-3">
+                    <label for="pourcentage" class="form-label fw-bold">Pourcentage de réduction (%)</label>
+                    <input type="number" step="0.1" name="pourcentage" id="pourcentage" class="form-control" required placeholder="Ex : 10">
+                </div>
+
+                <!-- Catégorie -->
+                <div class="mb-3">
+                    <label for="category" class="form-label fw-bold">Catégorie concernée (optionnel)</label>
+                    <select name="category_id" id="category" class="form-select">
+                        <option value="">Toutes les catégories</option>
+                        {% for c in categories %}
+                            <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Dates -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="date_debut" class="form-label fw-bold">Date de début</label>
+                        <input type="date" name="date_debut" id="date_debut" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="date_fin" class="form-label fw-bold">Date de fin</label>
+                        <input type="date" name="date_fin" id="date_fin" class="form-control" required>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{{ path('super_admin_promotions') }}" class="btn btn-secondary">↩️ Retour</a>
+                    <button type="submit" class="btn btn-success">💾 Enregistrer</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

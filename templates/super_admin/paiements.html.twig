@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}💰 Paiements{% endblock %}
+
+{% block body %}
+<h2>💰 Supervision des paiements et commandes</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Total</th>
+            <th>Statut</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in commandes %}
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.client.nom }}</td>
+            <td>{{ c.total }} DT</td>
+            <td>{{ c.statut }}</td>
+            <td>{{ c.dateCommande|date('d/m/Y H:i') }}</td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5">Aucune commande trouvée.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
